@@ -1,0 +1,100 @@
+using System;
+using System.Text;
+using System.IO;
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Globalization;
+
+namespace Test {
+    class Program
+    {
+        public static void ComputeTime(int phase, double distance, double speedPerDay)
+        {
+            if (phase == 1)
+            {
+                double daytime = 14.75;
+                double nighttime = 14.75;
+                double remainDist = distance;
+                double time = 0;
+
+                while (daytime >= 1)
+                {
+                    remainDist -= speedPerDay;
+                    time++;
+                    daytime--;
+
+                    if (daytime < 1)
+                    {
+                        remainDist -= speedPerDay * daytime;
+
+                        if (remainDist <= 0)
+                        {
+                            Console.WriteLine($"Луноход-1 проедет {distance} км за {Math.Ceiling(time)} дней.");
+                            break;
+                        }
+
+                        time += nighttime;
+                        daytime = 14.75;
+                    }
+
+                }
+            }
+            if (phase == 2)
+            {
+                Console.WriteLine("Луноход-1 ничего не проедет, пока новолуние.");
+            }
+            if (phase == 3 || phase == 4)
+            {
+                double daytime = 7.375;
+                double nighttime = 7.375;
+                double remainDist = distance;
+                double time = 0;
+
+                while (daytime >= 1)
+                {
+                    remainDist -= speedPerDay;
+                    time++;
+                    daytime--;
+
+                    if (daytime < 1 || remainDist <= 0)
+                    {
+                        remainDist -= speedPerDay * daytime;
+
+                        if (remainDist <= 0)
+                        {
+                            Console.WriteLine($"Луноход-1 проедет {distance} км за {Math.Ceiling(time)} дней.");
+                            break;
+                        }
+
+                        time += daytime + nighttime;
+                        daytime = 7.375;
+                    }
+
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            int distance = int.Parse(Console.ReadLine());
+            int speedPerDay = int.Parse(Console.ReadLine());
+            int moonPhase = int.Parse(Console.ReadLine());
+
+            switch (moonPhase)
+            {
+                case 1:
+                    ComputeTime(moonPhase, distance, speedPerDay);
+                    break;
+
+                case 2:
+                    ComputeTime(moonPhase, distance, speedPerDay);
+                    break;
+                case 3:
+                    ComputeTime(moonPhase, distance, speedPerDay);
+                    break;
+                case 4:
+                    ComputeTime(moonPhase, distance, speedPerDay);
+                    break;
+            }
+        }
+    }
+}
